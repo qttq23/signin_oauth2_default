@@ -92,12 +92,23 @@ using nodejs can give you the ability to deploy your server on linux-supported c
 if you write c++ server on Windows, you may want to deploy in Azure Container Apps (https://azure.microsoft.com/en-us/services/container-apps/)
 
 
-# Overview about Google Cloud account, key, permission
+# Overview about Google Cloud account, key, permission, credentials
 ## API key
+used for public anonymous access to google cloud apis.
+You should restrict it in production. you can restrict which domain, ip can use and which api services can use.
 
-## oauth client
+## OAuth 2.0 Client IDs
+is an ID to identify your app (web app or desktop or mobile app).
+used in conjunction with Oauth2 flow (such as Google oauth2 flow) to get user consent.
+
+for example, Google will show your app info (through your oauth2 client ID) to end users and ask if them accept giving your app permissions (such as reading profile, email or more powerful permissions).
+The same for Github/Facebook, you have to create a oauth2 client id in Github/Facebook console and then use that id to ask if end-users of facebook/github agree to give you permissions.
+
+Usually, the common use case it to login user with google, facebook, github, ... You only ask users for permissions to access their email, profile. After getting the token which has enough scope to get email/profile, you send that token to Identity Platform to signup/signin your users. (or you can query user info using those tokens with your own authentication system. Not recommended)
 
 ## service account
-
+contains an ID and a secret key. (internally, it's used to exchange the oauth2 access token to access powerful Admin API)
+this is the most powerful credentials. should only used in trusted environments (such as server).
+you can also extend or restrict the scope of service account. 
 
 
