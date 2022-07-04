@@ -49,25 +49,25 @@ Firebase Auth Rest API (same as Identity Platform rest api):
 https://firebase.google.com/docs/reference/rest/auth
 )
 
--> recommended: use Firebase Authentication client libraries for mobile and web app to simplify the signin process. use Firebase Authentication admin library for nodejs server to verify users and add custom claims.
+-> recommended: use Firebase Authentication client libraries for mobile and web app to simplify the signin process. use Firebase Authentication admin library for nodejs server to verify users and add custom claims.  
 -> recommended: only use Identiy Platform rest API for c++ client desktop app. donot use in c++ server app. 
 (because to use in c++ server, you have to maunally exchange the service account to get oauth2 access token which is very complex process and you will not want to mess with it. if needed, use c++ app as a cooperative tool that supports Nodejs server with CPU intensive tasks.) 
 
--> note about firebase storage: Firebase Authentication offers a convenient way to control user access to Firebase storage without additional server. Once you singed in into Firebase Authentication (or Identity Platform), you get an IdToken to access Firebase storage. Firebase storage will view your idtoken to know who you are and what privilages you have (such as admin or normal) through your idtoken's custom claims. But this is not recommended. because you have to use Firebase products not google cloud products. for example, you have to create new separate Firebase Storage bucket regardless of wheater you already have buckets in GGcloud storage or not. Please view Google Cloud STorage article for more generic solution for storaging files.   
-
-
+-> note about firebase storage: Firebase Authentication offers a convenient way to control user access to Firebase storage without additional server. Once you singed in into Firebase Authentication (or Identity Platform), you get an IdToken to access Firebase storage. Firebase storage will view your idtoken to know who you are and what privilages you have (such as admin or normal) through your idtoken's custom claims. But this is not recommended. because you have to use Firebase products not google cloud products. for example, you have to create new separate Firebase Storage bucket regardless of wheater you already have buckets in GGcloud storage or not. Please view Google `Cloud Storage article` for more generic solution for storaging files.   
 
 # google sigin:
 ## web & mobile
 Firebase Authentication has client libraries for web (javascript), mobile (android, ios, flutter).  
+(https://firebase.google.com/docs/reference/js/auth.auth)
 
 ## server
-Firebase Authentication has Nodejs admin library.
+Firebase Authentication has Nodejs admin library.  
+(https://firebase.google.com/docs/reference/admin/node/firebase-admin.auth.baseauth)
 
 ## desktop c++
-use Rest Api of Firebase Authentication or Identity Platform (both are same).  
-(https://firebase.google.com/docs/reference/rest/auth#section-get-account-info  
-or: https://cloud.google.com/identity-platform/docs/reference/rest/v1/accounts/lookup)
+use Rest Api of Firebase Authentication or Identity Platform (both are same). you will need `API key`.  
+(https://cloud.google.com/identity-platform/docs/reference/rest/v1/accounts/lookup
+or: https://firebase.google.com/docs/reference/rest/auth#section-get-account-info )
 
 the flow is as followings:  
 - start local server to receive response (authorization code) from Google Oauth2 server.
@@ -76,7 +76,8 @@ the flow is as followings:
 - user selects an account.
 - Google Oauth2 responds an Authorization Code to RedirectUri (the local server).
 - local server receives Authorization Code and use that code to exchange for Access Token or Id Token.
-(by requesting to Google Oauth2 server).
+(by requesting to Google Oauth2 server).  
+(reference: https://developers.google.com/identity/protocols/oauth2/native-app)  
 
 -> that's all for Oauth2 flow.  
 -> further, you want to signin to Identity Platform. because it manages your authentication better with IdToken,RefreshToken and custom claims.   
@@ -84,7 +85,8 @@ the flow is as followings:
 - after local server successfully exchanged for AccessToken/IdToken, it put those tokens to the request to Identity Platform to sign in.  
 - Identity Platform will responds a pair of IdToken and RefreshToken.  
 (idtoken and refreshtoken here is different from Google Oauth2 Idtoken/refreshtoken)
-- local server receives those tokens and store it in local file.
+- local server receives those tokens and store it in local file.  
+(reference: https://cloud.google.com/identity-platform/docs/reference/rest/v1/accounts/signInWithIdp)
 
 -> That's all about the Sigin to Identity Platform.  
 -> the idToken is your identity, keep it secret. api server can extract info from idToken to know who you are.
@@ -94,11 +96,23 @@ the flow is as followings:
 
 - After local server has the IdToken of Identity Platform, it sends that IdToken to your ApiServer.
 - ApiServer (eg: nodejs server with Firebase Authentication Admin Sdk) can verify your identity and set up resources (database) for you and also set some CustomClaims.
-- After apiserver set CustomClaims, the client needs to refresh IdToken to get the IdToken that holds the new custom Claims.
+- After apiserver set CustomClaims, the client needs to refresh IdToken to get the IdToken that holds the new custom Claims.  
+(reference:
+verify id token:
+https://firebase.google.com/docs/reference/admin/node/firebase-admin.auth.baseauth#baseauthverifyidtoken
+
+add custom claims:
+https://firebase.google.com/docs/reference/admin/node/firebase-admin.auth.baseauth.md#baseauthsetcustomuserclaims
+
+refresh token:
+https://firebase.google.com/docs/auth/admin/custom-claims#propagate_custom_claims_to_the_client
+or:
+https://cloud.google.com/identity-platform/docs/use-rest-api#section-refresh-token
+)
 
 ## server c++
 Firebase Authentication has NO admin libraries for c++ desktop.  
-there is only Identiy Platform's Rest Api for c++ server. But it requires you to manually exchange service account for oauth2 access token. so, not recommneded. 
+there is only Identiy Platform's Rest Api for c++ server. But it requires you to manually exchange `service account` for oauth2 access token. so, not recommneded. 
 (https://cloud.google.com/identity-platform/docs/reference/rest/v1/accounts/lookup)
 
 For simplier, you can use Nodejs server instead.   
