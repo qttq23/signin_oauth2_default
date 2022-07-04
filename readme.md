@@ -1,7 +1,11 @@
 
 # oauth2:
 read the 1st pattern: Authorization Flow (https://dzone.com/articles/oauth-20-in-a-nutshell)  
-also you can view the `desktop c++` section.
+also you can view the `desktop c++` section below.  
+(
+step-by-step guide:
+https://developers.google.com/identity/protocols/oauth2/native-app
+)
 
 # identity platform:
 - is a hub for authentication. 
@@ -9,8 +13,19 @@ also you can view the `desktop c++` section.
 - It has various types of account management methods such as resetPassword, sendVerifyCode, ...
 - An interesting feature is that you can store additional information in the idToken then retrieve it in later for authorize purpose (such as classify normal users and admins). 
 
-- identity platform doesnot have client/admin libary, it only has the Rest API. Client side needs the API key and idToken to get user info. Server side needs service account to set some important user info (such as custom claims). 
+- identity platform doesnot have client/admin libary, it only has the Rest API. Client side needs the `API key` and `idToken` to get user info. Server side needs `service account` to set some important user info (such as custom claims). 
 - You can use the Firebase Authentication's client library. view more below.
+
+(
+quickstart:  
+https://cloud.google.com/identity-platform/docs/sign-in-user-email
+
+Rest Api of Identity Platform:  
+https://cloud.google.com/identity-platform/docs/reference/rest/v1/accounts/lookup
+
+Rest Api for Identity platform for refreshing token:
+https://cloud.google.com/identity-platform/docs/use-rest-api#section-refresh-token
+)
 
 # Firebase Authentication:
 - is a subset of Identity Platform.
@@ -23,24 +38,24 @@ also you can view the `desktop c++` section.
 - it has client libraries for web and mobile. it has admin libraries for cross-platform servers such as nodejs, java, go.
 - it doesnot have client/admin library for c++ desktop/server app.
 
+(  
+Firebase Auth client libraries: (firebase auth is subset of Identity platform. firebase only supports web and mobile, not c++/desktop)  
+https://firebase.google.com/docs/reference/js/auth.auth
+
+Firebase Auth admin libraries:
+https://firebase.google.com/docs/reference/admin/node/firebase-admin.auth.baseauth.md#baseauth_class
+
+Firebase Auth Rest API (same as Identity Platform rest api):
+https://firebase.google.com/docs/reference/rest/auth
+)
 
 -> recommended: use Firebase Authentication client libraries for mobile and web app to simplify the signin process. use Firebase Authentication admin library for nodejs server to verify users and add custom claims.
 -> recommended: only use Identiy Platform rest API for c++ client desktop app. donot use in c++ server app. 
 (because to use in c++ server, you have to maunally exchange the service account to get oauth2 access token which is very complex process and you will not want to mess with it. if needed, use c++ app as a cooperative tool that supports Nodejs server with CPU intensive tasks.) 
 
--> note about firebase storage and google cloud storage ??
+-> note about firebase storage: Firebase Authentication offers a convenient way to control user access to Firebase storage without additional server. Once you singed in into Firebase Authentication (or Identity Platform), you get an IdToken to access Firebase storage. Firebase storage will view your idtoken to know who you are and what privilages you have (such as admin or normal) through your idtoken's custom claims. But this is not recommended. because you have to use Firebase products not google cloud products. for example, you have to create new separate Firebase Storage bucket regardless of wheater you already have buckets in GGcloud storage or not. Please view Google Cloud STorage article for more generic solution for storaging files.   
 
-(  
-quickstart:  
-https://cloud.google.com/identity-platform/docs/sign-in-user-email
 
-Rest Api of Identity Platform:  
-https://cloud.google.com/identity-platform/docs/reference/rest/v1/accounts/lookup
-
-Firebase Auth client libraries: (firebase auth is subset of Identity platform. firebase only supports web and mobile, not c++/desktop)  
-https://firebase.google.com/docs/reference/js/auth.auth
-
-)
 
 # google sigin:
 ## web & mobile
