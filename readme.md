@@ -147,7 +147,7 @@ contains an ID and a secret key. (internally, it's used to exchange the oauth2 a
 this is the most powerful credentials. should only used in trusted environments (such as server).
 you can also extend or restrict the scope of service account. 
 
-(using client library to handle service account: (nodejs server is recommended)
+(using client library to handle service account: (nodejs server is recommended)  
 https://cloud.google.com/docs/authentication/production
 
 manually get oauth2 tokens from service account: (not recommended)  
