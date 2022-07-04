@@ -97,6 +97,7 @@ the flow is as followings:
 - After local server has the IdToken of Identity Platform, it sends that IdToken to your ApiServer.
 - ApiServer (eg: nodejs server with Firebase Authentication Admin Sdk) can verify your identity and set up resources (database) for you and also set some CustomClaims.
 - After apiserver set CustomClaims, the client needs to refresh IdToken to get the IdToken that holds the new custom Claims.  
+
 (reference:
 verify id token:
 https://firebase.google.com/docs/reference/admin/node/firebase-admin.auth.baseauth#baseauthverifyidtoken
