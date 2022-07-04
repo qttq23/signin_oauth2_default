@@ -1,3 +1,9 @@
+this article includes:
+- [oauth2](#oauth2)
+- [identity platform](#identity-platform)
+- [Firebase Authentication](#firebase-authentication)
+- [Google signin](#google-sigin)
+- [Google cloud API key, Oauth2 Client Id, Service Account](#google-cloud-api-key-oauth2-client-id-service-account)
 
 # oauth2:
 read the 1st pattern: Authorization Flow (https://dzone.com/articles/oauth-20-in-a-nutshell)  
@@ -122,7 +128,7 @@ using nodejs can give you the ability to deploy your server on linux-supported c
 if you write c++ server on Windows, you may want to deploy in Azure Container Apps (https://azure.microsoft.com/en-us/services/container-apps/)
 
 
-# Overview about Google Cloud account, key, permission, credentials
+# Google cloud API key, Oauth2 Client Id, Service Account
 (https://cloud.google.com/docs/authentication)
 
 ## API key
