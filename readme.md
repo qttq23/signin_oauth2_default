@@ -74,16 +74,16 @@ the flow is as followings:
 -> That's all about the Sigin to Identity Platform.  
 -> the idToken is your identity, keep it secret. api server can extract info from idToken to know who you are.
 
--> In some scenarios, apiserver want to store some additional info to your idtoken for convinient purposes such as quickly get your's role (admin or user) to perform some certain actions. apiserver can store addtional info to Custom claims.
+-> In some scenarios, apiserver want to store some additional info to your idtoken for convenient purposes such as quickly get your's role (admin or user) to perform some certain actions. apiserver can store addtional info to Custom claims.
 (the usage of custom claims to identify you in Firebase Storage is not recommended. see the article `Storage` for more details.)
 
 - After local server has the IdToken of Identity Platform, it sends that IdToken to your ApiServer.
-- ApiServer (eg: nodejs server with Firebase Admin Sdk) can verify your identity and set up resources (database) for you and also set some CustomClaims.
+- ApiServer (eg: nodejs server with Firebase Authentication Admin Sdk) can verify your identity and set up resources (database) for you and also set some CustomClaims.
 - After apiserver set CustomClaims, the client needs to refresh IdToken to get the IdToken that holds the new custom Claims.
 
 ## server c++
 Firebase Authentication has NO admin libraries for c++ desktop.  
-there is only Identiy Platform's Rest Api for c++ server. But it requires you to manually exchange service account for oauth2 access token.  
+there is only Identiy Platform's Rest Api for c++ server. But it requires you to manually exchange service account for oauth2 access token. so, not recommneded. 
 (https://cloud.google.com/identity-platform/docs/reference/rest/v1/accounts/lookup)
 
 For simplier, you can use Nodejs server instead.   
