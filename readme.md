@@ -12,7 +12,8 @@ also you can view the `desktop c++` section.
 - identity platform doesnot have client/admin libary, it only has the Rest API. Client side needs the API key and idToken to get user info. Server side needs service account to set some important user info (such as custom claims). 
 - You can use the Firebase Authentication's client library. view more below.
 
--> recommended: only use Identiy Platform rest API for client c++ app. donot use in c++ server app because you have to maunally exchange the service account to get oauth2 access token which is very complex process and you will not want to mess with it. for server side, just use Firebase authentication's admin library for Nodejs. Use c++ app as a cooperative tool that supports Nodejs server with CPU intensive tasks. 
+-> recommended: only use Identiy Platform rest API for client c++ app. donot use in c++ server app. for server side, just use Firebase authentication's admin library for Nodejs.  
+(because to use in c++ server, you have to maunally exchange the service account to get oauth2 access token which is very complex process and you will not want to mess with it. if needed, use c++ app as a cooperative tool that supports Nodejs server with CPU intensive tasks.) 
 
 # Firebase Authentication:
 - is a subset of Identity Platform.
@@ -24,6 +25,8 @@ also you can view the `desktop c++` section.
 
 - it has client libraries for web and mobile. it has admin libraries for cross-platform servers such as nodejs, java, go.
 - it doesnot have client/admin library for c++ desktop/server app.
+
+-> recommended: use this for mobile and web app to simplify the signin process. use admin library for nodejs server to verify users and add custom claims.
 
 (  
 quickstart:  
