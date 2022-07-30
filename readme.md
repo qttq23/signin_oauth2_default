@@ -4,7 +4,7 @@ read the 1st pattern: Authorization Flow (https://dzone.com/articles/oauth-20-in
 also you can view the `desktop c++` section.
 
 # identity platform:
-- is a hub for authentication. it signs you in, give you IdToken and RefreshToken. allows you to access Google Cloud Storage, Firebase Database,...
+- is a hub for authentication. it signs you in, give you IdToken and RefreshToken. allows you to access Firebase Storage, Firebase Database,...
 - it provides Google/Github/Facebook/Password Signin.
 
 - internally, it interacts with oauth2 services (google, facebook,..) and then sign you in.
@@ -74,4 +74,16 @@ For simplier, you can use Nodejs server instead.
 then if needed, use c++ app/tool to cooperate with Nodejs server to do CPU intensive tasks.  
 using nodejs can give you the ability to deploy your server on linux-supported cloud environemnt (most cloud services support Linux).  
 if you write c++ server on Windows, you may want to deploy in Azure Container Apps (https://azure.microsoft.com/en-us/services/container-apps/)
+
+
+## set authorized origins/domains
+there are 3 places that relates to authorized domains:
+- the Oauth Client's detail page. (google cloud console > api & services > credentials)
+- Google Oauth2 Consent page. (google cloud console > api & services > oauth consent screen)
+- Identity Platform's Google Provider's detail page. (google cloud console > identity platform > providers)
+
+if you're developing desktop app, you may just need to specify 'localhost' as authorized domain.
+if you're developing web app, you may need to specify your hosting domain and potentially your custom domain as authorized domains.
+
+
 
