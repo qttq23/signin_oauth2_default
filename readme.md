@@ -153,6 +153,8 @@ explain:
 this also assumes that user already signed out of google account in strange device's web browser.
 after doing this, the strange device only have the IdToken of Identity Platform left.
 
+(https://developers.google.com/identity/protocols/oauth2/native-app#tokenrevoke)
+
 2. your service should revoke the idToken of Google Cloud Identity Platform. by doing that, the strange device now can't use the IdToken to access to your service anymore.
 If they want to, they have to sign in to google account again. As mentioned above, user already signed out of google account and invalidate the old google tokens.
 Now the strange device can't use user's google tokens as well as sign in to user's google account. strange device also can't use IdToken to access your service.
@@ -164,6 +166,10 @@ So service should invalidates all signed urls that point to user's private objec
 eg: rename "private/" to "private_1/"
 Even if the strange device guess out the new folder name, it still can't access because it doesnot have signed url for new name.
 
+(https://firebase.google.com/docs/reference/admin/node/firebase-admin.auth.baseauth.md#baseauthrevokerefreshtokens
+
+https://stackoverflow.com/a/73209023/16550663
+)
 
 
 
