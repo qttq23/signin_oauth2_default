@@ -139,6 +139,35 @@ if you're developing desktop app, you may just need to specify 'localhost' as au
 if you're developing web app, you may need to specify your hosting domain and potentially your custom domain as authorized domains.
 
 
+## sign out
+In simple case, your app just needs to remove the tokens (idtoken, refreshtoken,..) from storage to "sign out" user.
+
+But for more complex case, such as when users lost their devices or they just signed in to a strange device, ...
+whatever reason, and now the user just want to "sign out all devices" then re-sign in to device that they trust.
+they should do steps as below, the order is important:
+1. go to Google Account and remove your app's access.
+2. command your service to sign out their account from all devices (revoke idtoken and rename private objects).
+
+explain:
+1. is to prevent the strange device remember user's google tokens (accesstoken and refreshtoken) and programmatically sign in to your app again.
+this also assumes that user already signed out of google account in strange device's web browser.
+after doing this, the strange device only have the IdToken of Identity Platform left.
+
+2. your service should revoke the idToken of Google Cloud Identity Platform. by doing that, the strange device now can't use the IdToken to access to your service anymore.
+If they want to, they have to sign in to google account again. As mentioned above, user already signed out of google account and invalidate the old google tokens.
+Now the strange device can't use user's google tokens as well as sign in to user's google account. strange device also can't use IdToken to access your service.
+But be aware of signed urls that your service provided to client side. those urls can be categorized into 3 types:
+- the public url: this is fine to be exposed to client side or anywhere.
+- the share url: these are urls that someone shares to you to allow you to access their objects. This is still ok to be exposed.
+- the private url: these are urls that point to your private objects. so this is not supposed to be exposed anywhere except your trusted computer.
+So service should invalidates all signed urls that point to user's private objects. one solution is to rename the folder contains those private objects.
+eg: rename "private/" to "private_1/"
+Even if the strange device guess out the new folder name, it still can't access because it doesnot have signed url for new name.
+
+
+
+
+
 # Google cloud API key, Oauth2 Client Id, Service Account
 (https://cloud.google.com/docs/authentication)
 
